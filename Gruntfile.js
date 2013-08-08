@@ -101,10 +101,54 @@ module.exports = function(grunt) {
                     bare: true
                 },
                 files: [
-                    { 'build/js/vapour.js': 'js/core/vapour.coffee' }, // 1:1 compile
-                    { 'build/js/zebra.js': ' js/plugins/wet-boew-plugin-zebra.coffee' },
-                    { 'build/js/equalize.js': 'js/plugins/equalize/wet-boew-plugin-equalize.coffee' },
+                    { 'build/js/vapour.js': 'js/core/vapour.coffee' },
+                    {'path/to/wet-boew.js': ['js/plugins/*.coffee'] }
+
                 ]
+      }
+    },
+
+    /* Sass Compile
+    ===================================== */
+    sass: {
+           /* Wet Base Compile
+            ===================================== */
+        base: {
+            options: {
+                outputStyle: 'nested'
+            },
+            files: {
+                'build/css/base.css': 'sass/*.scss'
+            }
+        },
+           /* Themes Compile
+            ===================================== */
+        themes: {
+          options: {
+            outputStyle: 'nested'
+          },
+          files: grunt.file.expandMapping(['themes/**/sass/*.scss'],'build/',{
+              rename: function(destBase,destPath) {
+                destPath = destBase + destPath;
+                destPath = destPath.replace('/sass', '/css');
+                return destPath.replace(/\.scss$/,".css");
+              }  
+            })
+          }
+    },
+
+     /* Build Merging
+    =====================================*/
+    copy: {
+      main: {
+        files: [
+         {expand:true, flatten: true, src: ['js/polyfills/*.js'], dest: 'build/js/polyfills/',filter: 'isFile'},
+         {expand:true, flatten: true, src: ['lib/current/jquery/jquery*.js'], dest: 'build/js/', filter: 'isFile'},
+         {expand:true, flatten: true, src: ['lib/custom/*.js'], dest: 'build/js/', filter: 'isFile'},
+         {expand:true, flatten: true, src: ['lib/oldie/jquery/jquery*.js'], dest: 'build/js/oldie/', filter: 'isFile'},
+         {expand:true, flatten: true, src: ['lib/oldie/respond/*.min.js'], dest: 'build/js/oldie/', filter: 'isFile'},
+         {expand:true, flatten: true, src: ['lib/oldie/selectivizr/*.js'], dest: 'build/js/oldie/', filter: 'isFile'}
+        ]
       }
     },
      /* Minifaction
@@ -174,8 +218,9 @@ module.exports = function(grunt) {
 
 
   // Default task.
-  grunt.registerTask('default', ['coffee', 'sass', 'concat', 'uglify']);
+  grunt.registerTask('default', ['coffee', 'sass', 'copy', 'concat', 'uglify']);
   grunt.registerTask('init', ['clean:build','bowerful', 'modernizr']);
   grunt.registerTask('reset', ['clean:reset','bowerful', 'modernizr']);
+
 
 };
