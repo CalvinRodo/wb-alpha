@@ -140,14 +140,24 @@ module.exports = function(grunt) {
      /* Build Merging
     =====================================*/
     copy: {
-      main: {
+      pre: {
         files: [
          {expand:true, flatten: true, src: ['js/polyfills/*.js'], dest: 'build/js/polyfills/',filter: 'isFile'},
          {expand:true, flatten: true, src: ['lib/current/jquery/jquery*.js'], dest: 'build/js/', filter: 'isFile'},
          {expand:true, flatten: true, src: ['lib/custom/*.js'], dest: 'build/js/', filter: 'isFile'},
          {expand:true, flatten: true, src: ['lib/oldie/jquery/jquery*.js'], dest: 'build/js/oldie/', filter: 'isFile'},
          {expand:true, flatten: true, src: ['lib/oldie/respond/*.min.js'], dest: 'build/js/oldie/', filter: 'isFile'},
-         {expand:true, flatten: true, src: ['lib/oldie/selectivizr/*.js'], dest: 'build/js/oldie/', filter: 'isFile'}
+         {expand:true, flatten: true, src: ['lib/oldie/selectivizr/*.js'], dest: 'build/js/oldie/', filter: 'isFile'},
+         
+        ]
+      },
+      post: {
+         files: [
+        {expand:true, flatten: false, src: ["themes/**", '!*sass*'], dest: 'dist/' },
+        {expand:true, flatten: true, src: ['build/js/oldie/*'], dest: 'dist/themes/wet-boew/js/oldie/'},
+        {expand:true, flatten: true, src: ['build/js/polyfills/*'], dest: 'dist/themes/wet-boew/js/polyfills/'},
+        {expand:true, flatten: true, src: ['build/js/*'], dest: 'dist/themes/wet-boew/js/', filter: 'isFile'},
+        {expand:true, flatten: true, src: ['build/themes/wet-boew/css/**'], dest: 'dist/themes/wet-boew/css/'}
         ]
       }
     },
@@ -218,7 +228,7 @@ module.exports = function(grunt) {
 
 
   // Default task.
-  grunt.registerTask('default', ['coffee', 'sass', 'copy', 'concat', 'uglify']);
+  grunt.registerTask('default', ['coffee', 'sass', 'copy:pre', 'concat', 'copy:post', 'uglify']);
   grunt.registerTask('init', ['clean:build','bowerful', 'modernizr']);
   grunt.registerTask('reset', ['clean:reset','bowerful', 'modernizr']);
 
