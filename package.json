@@ -1,0 +1,35 @@
+{
+  "name": "wb-alpha",
+  "version": "1.0.0",
+  "description": "wb-alpha ========",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt-cli": "~0.1.9"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-browserify": "~1.2.1",
+    "grunt-bowerful": "~0.3.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-qunit": "~0.2.2",
+    "grunt-contrib-jshint": "~0.6.2",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-modernizr": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-sass": "~0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/masterbee/wb-alpha.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "35aff849039bbb4dcbb4d49df21300f66f7b5664"
+}
